@@ -27,7 +27,7 @@ body {
     position: absolute;
     width: 100%;
     height: 100%;
-    background: url('./lockscreen.jpg.jpeg') no-repeat center/cover;
+    background: url('./lockscreen.jpeg') no-repeat center/cover;
     filter: blur(8px);
     z-index: -1;
 }
@@ -42,7 +42,7 @@ body {
 #main {
     display: none;
     min-height: 100vh; /* Better than fixed height for mobile */
-    background: url('./cover.jpg.jpeg') no-repeat top center; /* Keeps the top visible */
+    background: url('./cover.jpeg') no-repeat top center; /* Keeps the top visible */
     background-size: cover; 
 }
 #main h1 {
@@ -193,7 +193,7 @@ body {
 
 <div id="letterBox">
     <div class="letter">
-        <img src="./special.jpg.jpeg" class="letter-img">
+        <img src="./special.jpeg" class="letter-img">
         <h2>💌 For You</h2>
         <p id="text"></p>
         <button class="close-btn" onclick="closeBox('letterBox')">Close ❌</button>
@@ -203,7 +203,7 @@ body {
 <div id="favBox">
     <div class="fav">
         <h2>💖 My Favorite</h2>
-        <img src="./fav.jpg.jpeg" style="width: 200px; border-radius: 15px;">
+        <img src="./fav.jpeg" style="width: 200px; border-radius: 15px;">
         <br><br>
         <button class="close-btn" onclick="closeBox('favBox')">Close</button>
     </div>
@@ -225,16 +225,16 @@ body {
     <div class="love">
         <h2>💖 Once Again Happy Birthday Meri Jaan 💖</h2>
         <div class="gallery">
-            <img src="/happy.jpg.jpeg">
-            <img src="/happy2.jpg.jpeg">
-            <img src="/happy3.jpg.jpeg">
-            <img src="/happy4.jpg.jpeg">
+            <img src="/happy.jpeg">
+            <img src="/happy2.jpeg">
+            <img src="/happy3.jpeg">
+            <img src="/happy4.jpeg">
         </div>
         <button class="close-btn" onclick="closeBox('loveBox')">Close</button>
     </div>
 </div>
 
-<audio id="music" src="/song.mp3.mp3"></audio>
+<audio id="music" src="/song.mp3"></audio>
 
 <script>
     function showSorry() {
