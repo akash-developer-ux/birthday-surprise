@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Birthday Surprise 💖</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial;
+    overflow: hidden;
+}
+
+/* LOCK SCREEN */
+#lockScreen {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+}
+
+#lockScreen::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: url('./lockscreen.jpg.jpeg') no-repeat center/cover;
+    filter: blur(8px);
+    z-index: -1;
+}
+
+#lockScreen h2, input, button {
+    color: rgba(188, 10, 10, 0.9);
+    text-align: center;
+    padding: 10px;
+}
+
+/* MAIN */
+#main {
+    display: none;
+    min-height: 100vh; /* Better than fixed height for mobile */
+    background: url('./cover.jpg.jpeg') no-repeat top center; /* Keeps the top visible */
+    background-size: cover; 
+}
+#main h1 {
+    background: linear-gradient(45deg, #1b06ddde, #5eff76);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block; /* Required for the gradient to clip correctly */
+}
+
+.content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    text-align: center;
+    color: white;
+}
+
+/* BUTTON */
+.btn {
+    margin: 8px;
+    padding: 10px 15px;
+    border-radius: 20px;
+    border: none;
+    background: #ff4d6d;
+    color: white;
+    cursor: pointer;
+}
+
+/* COMMON POPUP SETUP */
+#favBox, #loveBox, #letterBox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none; /* Hidden by default */
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+/* BACKGROUND BLUR FOR ALL BOXES */
+#letterBox::before, #favBox::before, #loveBox::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.8); /* Dark Overlay */
+    backdrop-filter: blur(10px);
+    z-index: -1;
+}
+
+/* BOX CONTENT STYLING */
+.fav, .love, .letter {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 20px;
+    border-radius: 20px;
+    color: white;
+    text-align: center;
+    width: 85%;
+    max-width: 380px;
+    position: relative;
+}
+
+/* GALLERY UPDATES (THE PRO TIP) */
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    max-height: 350px;
+    overflow-y: auto;
+    margin: 15px 0;
+    margin-top: 15px;
+    padding: 10px;
+    justify-items: center;
+}
+
+.gallery img {
+    width: 100%;
+    height: 200px;
+    aspect-ratio: 1/1;
+    object-position: center;
+    object-fit: contain;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    display: block;
+}
+.gallery::-webkit-scrollbar {
+    width: 4px;
+}
+.gallery::-webkit-scrollbar-thumb {
+    background: #ff4d6d;
+    border-radius: 10px;
+}
+
+.letter-img {
+    width: 100px;
+    border-radius: 10px;
+}
+
+/* HEARTS */
+.heart {
+    position: absolute;
+    animation: float 5s linear infinite;
+    z-index: 1000;
+}
+
+@keyframes float {
+    0% {transform: translateY(100vh);}
+    100% {transform: translateY(-10vh); opacity:0;}
+}
+
+/* Close Button Styling */
+.close-btn {
+    background: white;
+    color: #ff4d6d;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 15px;
+    margin-top: 10px;
+    cursor: pointer;
+    font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<div id="lockScreen">
+    <h2>"𝕳𝖆𝖕𝖕𝖞 𝖇𝖎𝖗𝖙𝖍𝖉𝖆𝖞, 𝖇𝖆𝖇𝖊! 𝕿𝖍𝖆𝖓𝖐 𝖞𝖔𝖚 𝖋𝖔𝖗 𝖇𝖊𝖎𝖓𝖌 𝖞𝖔𝖚—𝖞𝖔𝖚'𝖗𝖊 𝖊𝖛𝖊𝖗𝖞𝖙𝖍𝖎𝖓𝖌 𝕴 𝖈𝖔𝖚𝖑𝖉 𝖊𝖛𝖊𝖗 𝖜𝖆𝖓𝖙 𝖆𝖓𝖉 𝖒𝖔𝖗𝖊". 💗</h2>
+    <input type="password" id="pass" placeholder="Enter Date (DD-MM-YYYY)">
+    <button onclick="checkPass()">Unlock</button>
+</div>
+
+<div id="main">
+    <div class="content">
+        <h1>🎉 𝓗𝓪𝓹𝓹𝔂 𝓫𝓲𝓻𝓽𝓱𝓭𝓪𝔂, 𝓫𝓪𝓫𝓮! 𝓣𝓱𝓪𝓷𝓴 𝔂𝓸𝓾 𝓯𝓸𝓻 𝓫𝓮𝓲𝓷𝓰 𝔂𝓸𝓾—𝔂𝓸𝓾'𝓻𝓮 𝓮𝓿𝓮𝓻𝔂𝓽𝓱𝓲𝓷𝓰 𝓘 𝓬𝓸𝓾𝓵𝓭 𝓮𝓿𝓮𝓻 𝔀𝓪𝓷𝓽 𝓪𝓷𝓭 𝓶𝓸𝓻𝓮
+ 💖</h1>
+        <button class="btn" onclick="showLetter()">🎁 Surprise</button>
+        <button class="btn" onclick="showFav()">💖 My Favorite</button>
+        <button class="btn" onclick="showLove()">❤️ If You Love Me then click here...</button>
+        <button class="btn" onclick="showSorry()">❤️ Sorry</button>
+    </div>
+</div>
+
+<div id="letterBox">
+    <div class="letter">
+        <img src="./special.jpg.jpeg" class="letter-img">
+        <h2>💌 For You</h2>
+        <p id="text"></p>
+        <button class="close-btn" onclick="closeBox('letterBox')">Close ❌</button>
+    </div>
+</div>
+
+<div id="favBox">
+    <div class="fav">
+        <h2>💖 My Favorite</h2>
+        <img src="./fav.jpg.jpeg" style="width: 200px; border-radius: 15px;">
+        <br><br>
+        <button class="close-btn" onclick="closeBox('favBox')">Close</button>
+    </div>
+</div>
+<div id="sorryBox" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; background: white; padding: 20px; border-radius: 15px; box-shadow: 0 0 20px rgba(0,0,0,0.2); width: 80%; text-align: center;">
+    <div class="sorry-content">
+        <h2 style="color: #d81b60;">I'm Really Sorry 🥺</h2>
+        <p style="color: #333; line-height: 1.6;">
+            I know I can be a bit much sometimes, but you mean the world to me. 
+            Thank you for being so patient with me. ❤️
+        </p>
+        <button onclick="closeBox('sorryBox')" style="background: #ff4d6d; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">Close</button>
+    </div>
+</div>
+
+<div id="overlay" onclick="closeBox('sorryBox')" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 999;"></div>
+
+<div id="loveBox">
+    <div class="love">
+        <h2>💖 Once Again Happy Birthday Meri Jaan 💖</h2>
+        <div class="gallery">
+            <img src="/happy.jpg.jpeg">
+            <img src="/happy2.jpg.jpeg">
+            <img src="/happy3.jpg.jpeg">
+            <img src="/happy4.jpg.jpeg">
+        </div>
+        <button class="close-btn" onclick="closeBox('loveBox')">Close</button>
+    </div>
+</div>
+
+<audio id="music" src="/song.mp3.mp3"></audio>
+
+<script>
+    function showSorry() {
+    // Show the sorry box and the background overlay
+    document.getElementById('sorryBox').style.display = 'block';
+    document.getElementById('overlay').style.display = 'block';
+}
+
+function closeBox(id) {
+    // Hide the box and the overlay
+    document.getElementById(id).style.display = 'none';
+    document.getElementById('overlay').style.display = 'none';
+}
+function checkPass() {
+    let p = document.getElementById("pass").value;
+    if (p === "20-04-2009") {
+        document.getElementById("lockScreen").style.display = "none";
+        document.getElementById("main").style.display = "block";
+    } else {
+        alert("Wrong Password");
+    }
+}
+
+let msg = "Happy Birthday 💖\n\nTum meri life ka sabse special part ho 😊\nMain sach me lucky hu ki tum meri life me ho ✨\n\nAaj ka din sirf tumhare liye hai 🎂\nOnce again Happy Birthday meri jaan ❤️";
+
+function showLetter() {
+    document.getElementById("letterBox").style.display = "flex";
+    let text = document.getElementById("text");
+    text.innerHTML = "";
+    let i = 0;
+    let interval = setInterval(() => {
+        text.innerHTML += msg[i];
+        i++;
+        if (i >= msg.length) clearInterval(interval);
+    }, 40);
+    document.getElementById("music").play();
+}
+
+function showFav() { document.getElementById("favBox").style.display = "flex"; }
+function showLove() { document.getElementById("loveBox").style.display = "flex"; }
+function closeBox(id) { document.getElementById(id).style.display = "none"; }
+
+setInterval(() => {
+    let heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "💖";
+    heart.style.left = Math.random() * 100 + "vw";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 5000);
+}, 300);
+</script>
+
+</body>
+</html>
